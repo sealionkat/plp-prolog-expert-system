@@ -1,6 +1,7 @@
 :- dynamic car/15.
 
 car('Nissan', 'Primera', 'P11', '1.6', 'D', 'GB', '1996', '2002', 'FWD', 'GA16DE', '1597', '90', '136', '12', '178').
+car('Nissan', 'Primera', 'P11', '2.0 SLX', 'D', 'GB', '1996', '2002', 'FWD', 'SR20De', '1998', '115', '166', '9.8', '198').
 car('Nissan', 'Primera', 'P10', '1.6', 'D', 'GB', '1990', '1998', 'FWD', 'R4/16', '1597', '90', '139', '11.9', '180').
 
 set_if_not_empty(Var, _, SetIfNotEmpty) :-
@@ -42,3 +43,12 @@ remove_all_cars() :-
     write("Usuwanie samochodu z bazy."), nl, nl,
     ask_for_input(true, Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax),
     retractall(car(Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax)).
+   
+get_cars_by_brand() :-
+    get_value_from_input(Marka, "Podaj marke: ", true), nl,
+    findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, _, _, _, _, _, _, _, _, _, _), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody [%w]:\n', [CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
+    
