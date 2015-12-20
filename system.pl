@@ -61,3 +61,14 @@ get_cars_info() :-
     length(UniqueCars, CarsLen),
     writef('Znalezione samochody [%w]:\n', [CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w %w\n\tSegment: %w\n\tKraj produkcji: %w\n\tLata produkcji: %w - %w\n\tNaped: %w\n\tSilnik: %w; Pojemnosc: %w cm3\n\tMoc: %w KM; Moment: %w Nm\n\tPrzyspieszenie (0-100): %w s; V-Max: %w km/h\n\n', CarInfo)).
+    
+get_cars_by_segment() :-
+    get_value_from_input(Segment, "Podaj segment: ", true), nl,
+    findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, Segment, _, _, _, _, _, _, _, _, _, _), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody w segmencie %w [%w]:\n', [Segment, CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
+
+    
+    
