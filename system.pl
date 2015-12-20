@@ -52,3 +52,12 @@ get_cars_by_brand() :-
     writef('Znalezione samochody [%w]:\n', [CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
     
+get_cars_info() :-
+    get_value_from_input(Marka, "Podaj marke: ", true), 
+    get_value_from_input(Model, "Podaj model: ", true),
+    nl,
+    findall([Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax], car(Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody [%w]:\n', [CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w %w\n\tSegment: %w\n\tKraj produkcji: %w\n\tLata produkcji: %w - %w\n\tNaped: %w\n\tSilnik: %w; Pojemnosc: %w cm3\n\tMoc: %w KM; Moment: %w Nm\n\tPrzyspieszenie (0-100): %w s; V-Max: %w km/h\n\n', CarInfo)).
