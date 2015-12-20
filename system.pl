@@ -70,5 +70,12 @@ get_cars_by_segment() :-
     writef('Znalezione samochody w segmencie %w [%w]:\n', [Segment, CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
 
+get_cars_by_country() :-
+    get_value_from_input(Country, "Podaj kod kraju: ", true), nl,
+    findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, Country, _, _, _, _, _, _, _, _, _), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody wyprodukowane w kraju %w [%w]:\n', [Country, CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
     
     
