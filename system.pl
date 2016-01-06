@@ -1,8 +1,19 @@
 :- dynamic car/15.
 
-car('Nissan', 'Primera', 'P11', '1.6', 'D', 'GB', '1996', '2002', 'FWD', 'GA16DE', '1597', '90', '136', '12', '178').
-car('Nissan', 'Primera', 'P11', '2.0 SLX', 'D', 'GB', '1996', '2002', 'FWD', 'SR20De', '1998', '115', '166', '9.8', '198').
-car('Nissan', 'Primera', 'P10', '1.6', 'D', 'GB', '1990', '1998', 'FWD', 'R4/16', '1597', '90', '139', '11.9', '180').
+car('Opel', 'Meriva', 'A', 'MINIVAN', 'K', 'E', '2002', '2010', 'FWD', 'BENZYNOWY', '1598', '87', '138', '14.5', '169').
+car('Nissan', 'Primera', 'P11',	'LIFTBACK', 'D', 'GB', '1996', '2002', 'FWD', 'BENZYNOWY', '1597', '90', '136', '12', '178').
+car('Opel', 'Astra Classic', 'F', 'SEDAN', 'C', 'PL', '1991', '2002', 'FWD',
+ 'BENZYNOWY', '1389', '82', '115', '15', '160').
+car('Volkswagen', 'Golf Variant', 'VI', 'KOMBI', 'C', 'DE', '2009', '2013', 'FWD', 'BENZYNOWY', '1390', '122', '200', '9.5', '200').
+car('Skoda', 'Octavia', 'I', 'LIFTBACK', 'C', 'PL', '1996', '2010', 'FWD', 'DIESEL', '1896', '90', '210', '12.1', '195').
+car('Ford', 'Focus', 'II', 'KOMBI', 'C', 'DE', '2004', '2011', 'FWD', 'BENZYNOWY', '1390', '80', '115', '12.5', '190').
+car('Kia', 'CEED', 'I', 'HATCHBACK', 'C', 'SI', '2006', '2012', 'FWD', 'BENZYNOWY', '1396', '109', '137', '11.6', '187').
+car('Opel', 'Insignia', 'A', 'SEDAN', 'D', 'DE', '2008', '2017', 'FWD', 'DIESEL', '1956', '110', '260', '12.1', '190').
+car('Ford', 'Ka', 'II', 'HATCHBACK', 'A', 'PL', '2008', 'x', 'FWD', 'DIESEL', '1248', '69', '102', '13', '185').
+car('Volkswagen', 'Lupo', 'I', 'HATCHBACK', 'A', 'DE', '1998', '2005', 'FWD', 'BENZYNOWY', '997', '50', '84',  '18', '152').
+
+
+
 
 set_if_not_empty(Var, _, SetIfNotEmpty) :-
     SetIfNotEmpty,
@@ -21,18 +32,18 @@ ask_for_input(SetIfNotEmpty, Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Nape
     get_value_from_input(Marka, "Marka: ", SetIfNotEmpty),
     get_value_from_input(Model, "Model: ", SetIfNotEmpty),
     get_value_from_input(Gene, "Generacja: ", SetIfNotEmpty),
-    get_value_from_input(Typ, "Typ nadwozia: ", SetIfNotEmpty),
+    get_value_from_input(Typ, "Typ nadwozia: ", SetIfNotEmpty), % HATCHBACK/SEDAN/COMBI/CABRIO/MINIVAN/PICKUP/LIFTBACK
     get_value_from_input(Seg, "Segment: ", SetIfNotEmpty),
-    get_value_from_input(Kraj, "Kraj produkcji: ", SetIfNotEmpty),
+    get_value_from_input(Kraj, "Kraj produkcji (kod kraju): ", SetIfNotEmpty), % Kod kraju
     get_value_from_input(Rozp, "Rozpoczecie produkcji: ", SetIfNotEmpty),
     get_value_from_input(Zak, "Zakonczenie produkcji: ", SetIfNotEmpty),
-    get_value_from_input(Naped, "Naped: ", SetIfNotEmpty),
-    get_value_from_input(Silnik, "Silnik: ", SetIfNotEmpty),
+    get_value_from_input(Naped, "Naped: ", SetIfNotEmpty), % FWD/RWD/4WD
+    get_value_from_input(Silnik, "Silnik: ", SetIfNotEmpty), % DIESEL/BENZYNOWY/ELEKTRYCZNY/HYBRYDOWY
     get_value_from_input(Poj, "Pojemnosc: ", SetIfNotEmpty),
-    get_value_from_input(Moc, "Moc maks.: ", SetIfNotEmpty),
-    get_value_from_input(Moment, "Moment: ", SetIfNotEmpty),
-    get_value_from_input(Accel, "Przyspieszenie 0-100: ", SetIfNotEmpty),
-    get_value_from_input(Vmax, "Predkosc maks.: ", SetIfNotEmpty).
+    get_value_from_input(Moc, "Moc maks. (konie mechaniczne): ", SetIfNotEmpty),
+    get_value_from_input(Moment, "Moment (Nm na min.): ", SetIfNotEmpty),
+    get_value_from_input(Accel, "Przyspieszenie 0-100 km/h (s): ", SetIfNotEmpty),
+    get_value_from_input(Vmax, "Predkosc maks (km/h).: ", SetIfNotEmpty).
 
 add_car() :-
     write("Dodawanie nowego samochodu do bazy."), nl, nl,
