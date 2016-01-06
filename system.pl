@@ -21,7 +21,7 @@ ask_for_input(SetIfNotEmpty, Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Nape
     get_value_from_input(Marka, "Marka: ", SetIfNotEmpty),
     get_value_from_input(Model, "Model: ", SetIfNotEmpty),
     get_value_from_input(Gene, "Generacja: ", SetIfNotEmpty),
-    get_value_from_input(Typ, "Typ: ", SetIfNotEmpty),
+    get_value_from_input(Typ, "Typ nadwozia: ", SetIfNotEmpty),
     get_value_from_input(Seg, "Segment: ", SetIfNotEmpty),
     get_value_from_input(Kraj, "Kraj produkcji: ", SetIfNotEmpty),
     get_value_from_input(Rozp, "Rozpoczecie produkcji: ", SetIfNotEmpty),
@@ -29,40 +29,40 @@ ask_for_input(SetIfNotEmpty, Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Nape
     get_value_from_input(Naped, "Naped: ", SetIfNotEmpty),
     get_value_from_input(Silnik, "Silnik: ", SetIfNotEmpty),
     get_value_from_input(Poj, "Pojemnosc: ", SetIfNotEmpty),
-    get_value_from_input(Moc, "Moc max: ", SetIfNotEmpty),
+    get_value_from_input(Moc, "Moc maks.: ", SetIfNotEmpty),
     get_value_from_input(Moment, "Moment: ", SetIfNotEmpty),
     get_value_from_input(Accel, "Przyspieszenie 0-100: ", SetIfNotEmpty),
-    get_value_from_input(Vmax, "V-Max: ", SetIfNotEmpty).
+    get_value_from_input(Vmax, "Predkosc maks.: ", SetIfNotEmpty).
 
 add_car() :-
     write("Dodawanie nowego samochodu do bazy."), nl, nl,
     ask_for_input(false, Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax),
     assertz(car(Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax)).
 
-remove_all_cars() :-
+remove_cars() :-
     write("Usuwanie samochodu z bazy."), nl, nl,
     ask_for_input(true, Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax),
     retractall(car(Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax)).
-   
-get_cars_by_brand() :-
+
+search_by_mark() :-
     get_value_from_input(Marka, "Podaj marke: ", true), nl,
     findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, _, _, _, _, _, _, _, _, _, _), Cars),
     sort(Cars, UniqueCars),
     length(UniqueCars, CarsLen),
     writef('Znalezione samochody [%w]:\n', [CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
-    
-get_cars_info() :-
-    get_value_from_input(Marka, "Podaj marke: ", true), 
+
+search_by_mm() :-
+    get_value_from_input(Marka, "Podaj marke: ", true),
     get_value_from_input(Model, "Podaj model: ", true),
     nl,
     findall([Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax], car(Marka, Model, Gene, Typ, Seg, Kraj, Rozp, Zak, Naped, Silnik, Poj, Moc, Moment, Accel, Vmax), Cars),
     sort(Cars, UniqueCars),
     length(UniqueCars, CarsLen),
     writef('Znalezione samochody [%w]:\n', [CarsLen]),
-    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w %w\n\tSegment: %w\n\tKraj produkcji: %w\n\tLata produkcji: %w - %w\n\tNaped: %w\n\tSilnik: %w; Pojemnosc: %w cm3\n\tMoc: %w KM; Moment: %w Nm\n\tPrzyspieszenie (0-100): %w s; V-Max: %w km/h\n\n', CarInfo)).
-    
-get_cars_by_segment() :-
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w %w\n\tSegment: %w\n\tKraj produkcji: %w\n\tLata produkcji: %w - %w\n\tNaped: %w\n\tSilnik: %w; Pojemnosc: %w cm3\n\tMoc: %w KM; Moment: %w Nm\n\tPrzyspieszenie (0-100): %w s; Predkosc maks.: %w km/h\n\n', CarInfo)).
+
+search_cars_by_segment() :-
     get_value_from_input(Segment, "Podaj segment: ", true), nl,
     findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, Segment, _, _, _, _, _, _, _, _, _, _), Cars),
     sort(Cars, UniqueCars),
@@ -70,12 +70,12 @@ get_cars_by_segment() :-
     writef('Znalezione samochody w segmencie %w [%w]:\n', [Segment, CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
 
-get_cars_by_country() :-
+search_cars_by_country() :-
     get_value_from_input(Country, "Podaj kod kraju: ", true), nl,
     findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, Country, _, _, _, _, _, _, _, _, _), Cars),
     sort(Cars, UniqueCars),
     length(UniqueCars, CarsLen),
     writef('Znalezione samochody wyprodukowane w kraju %w [%w]:\n', [Country, CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
-    
-    
+
+
