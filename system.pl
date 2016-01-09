@@ -1,6 +1,6 @@
 :- dynamic car/15.
 
-car('Opel', 'Meriva', 'A', 'MINIVAN', 'K', 'E', '2002', '2010', 'FWD', 'BENZYNOWY', '1598', '87', '138', '14.5', '169').
+car('Opel', 'Meriva', 'A', 'MINIVAN', 'K', 'ES', '2002', '2010', 'FWD', 'BENZYNOWY', '1598', '87', '138', '14.5', '169').
 car('Nissan', 'Primera', 'P11',	'LIFTBACK', 'D', 'GB', '1996', '2002', 'FWD', 'BENZYNOWY', '1597', '90', '136', '12', '178').
 car('Opel', 'Astra Classic', 'F', 'SEDAN', 'C', 'PL', '1991', '2002', 'FWD',
  'BENZYNOWY', '1389', '82', '115', '15', '160').
@@ -11,6 +11,7 @@ car('Kia', 'CEED', 'I', 'HATCHBACK', 'C', 'SI', '2006', '2012', 'FWD', 'BENZYNOW
 car('Opel', 'Insignia', 'A', 'SEDAN', 'D', 'DE', '2008', '2017', 'FWD', 'DIESEL', '1956', '110', '260', '12.1', '190').
 car('Ford', 'Ka', 'II', 'HATCHBACK', 'A', 'PL', '2008', 'x', 'FWD', 'DIESEL', '1248', '69', '102', '13', '185').
 car('Volkswagen', 'Lupo', 'I', 'HATCHBACK', 'A', 'DE', '1998', '2005', 'FWD', 'BENZYNOWY', '997', '50', '84',  '18', '152').
+car('Opel', 'Meriva', 'B', 'MINIVAN', 'K', 'ES', '2010', 'x', 'FWD', 'BENZYNOWY', '1364', '120', '175', '11.5', '188').
 
 
 
@@ -82,7 +83,7 @@ search_cars_by_segment() :-
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
 
 search_cars_by_country() :-
-    get_value_from_input(Country, "Podaj kod kraju: ", true), nl,
+    get_value_from_input(Country, "Podaj kod kraju (ISO 3166-1 alfa-2): ", true), nl,
     findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, Country, _, _, _, _, _, _, _, _, _), Cars),
     sort(Cars, UniqueCars),
     length(UniqueCars, CarsLen),
@@ -90,7 +91,7 @@ search_cars_by_country() :-
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
 
 search_cars_by_type() :-
-    get_value_from_input(Type, "Podaj typ nadwozia: ", true), nl,
+    get_value_from_input(Type, "Podaj typ nadwozia (HATCHBACK/SEDAN/COMBI/CABRIO/MINIVAN/PICKUP/LIFTBACK): ", true), nl,
     findall([Marka, Model, Generacja], car(Marka, Model, Generacja, Type, _, _, _, _, _, _, _, _, _, _, _), Cars),
     sort(Cars, UniqueCars),
     length(UniqueCars, CarsLen),
@@ -104,7 +105,7 @@ search_cars_by_drive() :-
     length(UniqueCars, CarsLen),
     writef('Znalezione samochody z typem napedu %w [%w]:\n', [Type, CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
-    
+
 search_cars_by_engine() :-
     get_value_from_input(Type, "Podaj typ silnika (DIESEL/BENZYNOWY/ELEKTRYCZNY/HYBRYDOWY): ", true), nl,
     findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, _, _, _, _, Type, _, _, _, _, _), Cars),
