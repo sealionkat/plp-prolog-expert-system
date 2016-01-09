@@ -89,4 +89,26 @@ search_cars_by_country() :-
     writef('Znalezione samochody wyprodukowane w kraju %w [%w]:\n', [Country, CarsLen]),
     foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
 
+search_cars_by_type() :-
+    get_value_from_input(Type, "Podaj typ nadwozia: ", true), nl,
+    findall([Marka, Model, Generacja], car(Marka, Model, Generacja, Type, _, _, _, _, _, _, _, _, _, _, _), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody z typem nadwozia %w [%w]:\n', [Type, CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
 
+search_cars_by_drive() :-
+    get_value_from_input(Type, "Podaj typ napedu (FWD/RWD/4WD): ", true), nl,
+    findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, _, _, _, Type, _, _, _, _, _, _), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody z typem napedu %w [%w]:\n', [Type, CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
+    
+search_cars_by_engine() :-
+    get_value_from_input(Type, "Podaj typ silnika (DIESEL/BENZYNOWY/ELEKTRYCZNY/HYBRYDOWY): ", true), nl,
+    findall([Marka, Model, Generacja], car(Marka, Model, Generacja, _, _, _, _, _, _, Type, _, _, _, _, _), Cars),
+    sort(Cars, UniqueCars),
+    length(UniqueCars, CarsLen),
+    writef('Znalezione samochody z typem silnika %w [%w]:\n', [Type, CarsLen]),
+    foreach(member(CarInfo, UniqueCars), writef('\t%w %w %w\n', CarInfo)).
